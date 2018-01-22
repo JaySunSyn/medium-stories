@@ -1,7 +1,7 @@
 {
-  "name": "medium-story-card",
+  "name": "medium-stories",
   "description": "A card displaying and linking to a story published on medium",
-  "main": "medium-story-card.html",
+  "main": "medium-stories.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0",
     "iron-ajax": "^2.0.8",
