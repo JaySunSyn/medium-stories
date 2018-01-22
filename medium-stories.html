@@ -1,0 +1,264 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../polymer/lib/elements/dom-if.html">
+
+<link rel="import" href="../import-momentjs/import-momentjs.html">
+
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+
+<dom-module id="medium-stories">
+  <template>
+    <style>
+      :host {
+        display: block;
+        letter-spacing: 0;
+        font-weight: 400;
+        font-style: normal;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        -moz-font-feature-settings: "liga" on;
+        color: rgba(0, 0, 0, .84);
+        font-size: 20px;
+        line-height: 1.4;
+
+        max-width: 640px;
+        margin-left: auto;
+        margin-right: auto;
+
+        --x-height-multiplier: 0.375;
+        --baseline-multiplier: 0.17;
+        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+        letter-spacing: .01rem;
+        font-weight: 400;
+        font-style: normal;
+
+        font-size: 18px;
+        line-height: 1.58;
+        letter-spacing: -.004em;
+      }
+
+      .card {
+        background: #fff;
+        -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, .04);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, .04);
+        border: 1px solid rgba(0, 0, 0, .09);
+        -webkit-border-radius: 3px;
+        border-radius: 3px;
+
+        padding-right: 20px;
+        padding-left: 20px;
+        padding-bottom: 15px;
+        padding-top: 10px;
+        margin-top: 20px;
+      }
+
+      .title,
+      .sub-title,
+      .profile {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      }
+
+      .title {
+        font-size: 26px;
+        margin-left: -1.88px;
+        line-height: 1.04;
+        letter-spacing: -.015em;
+      }
+
+      .sub-title {
+        color: rgba(0, 0, 0, .54);
+        font-size: 20px;
+      }
+
+      @media (max-width: 767px) {
+        .title {
+          line-height: 1.12;
+          letter-spacing: -.005em
+        }
+      }
+
+      .profile {
+        padding-top: 5px;
+        margin-bottom: 15px;
+
+        font-size: 13px;
+
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+      }
+
+      .profile-image {
+        width: 32px;
+        height: 32px;
+        display: inline-block;
+        vertical-align: middle;
+        -webkit-border-radius: 100%;
+        border-radius: 100%;
+      }
+
+      .profile-desc {
+        line-height: 1.4;
+        padding-left: 10px;
+        text-rendering: auto;
+      }
+
+      .profile-name,
+      .content {
+        text-decoration: inherit;
+        color: inherit;
+      }
+
+      .profile-name:visited,
+      .content:visited {
+        text-decoration: inherit;
+        color: inherit;
+      }
+
+      .profile-name {
+        color: #03a87c;
+      }
+
+      .profile-info {
+        color: rgba(0, 0, 0, .54);
+        fill: rgba(0, 0, 0, .54);
+      }
+    </style>
+
+    <template is="dom-repeat" items="[[posts]]" as="post">
+      <div class="card">
+        <div class="profile">
+          <img class="profile-image" src="[[userImage]]" alt="">
+          <div class="profile-desc">
+            <a class="profile-name" href="https://medium.com/@[[user.username]]" target="_blank">[[user.name]]</a>
+            <div class="profile-info">
+              <span>[[_getDate(post.firstPublishedAt)]]</span>
+              <span>&#183;</span>
+              <span>[[_roundUp(post.virtuals.readingTime)]] min read</span>
+            </div>
+          </div>
+        </div>
+        <a class="content" href="https://medium.com/@[[user.username]]/[[post.uniqueSlug]]" target="_blank">
+          <template is="dom-repeat" items="[[post.previewContent.bodyModel.paragraphs]]" as="preview">
+            <template is="dom-if" if="[[_eql(preview.type,3)]]">
+              <h1 class="title">[[preview.text]]</h1>
+            </template>
+            <template is="dom-if" if="[[_eql(preview.type,2)]]">
+              <h2 class="">[[preview.text]]</h2>
+            </template>
+            <template is="dom-if" if="[[_notEql(preview.type,3,2)]]">
+              <p class$="[[_classForType(preview.type)]]">[[preview.text]]</p>
+            </template>
+          </template>
+        </a>
+      </div>
+    </template>
+
+    <iron-ajax auto url="[[url]]" handle-as="json" on-response="_handleResponse"></iron-ajax>
+
+  </template>
+
+  <script>
+    /**
+     * `medium-story-card`
+     * A card displaying and linking to a story published on medium
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class MediumStories extends Polymer.Element {
+    	static get is() {return 'medium-stories';}
+    	static get properties() {
+    		return {
+    			url: {
+    				type: String,
+    			},
+
+    			response: {
+    				type: Object,
+    			},
+
+    			posts: {
+    				type: Array,
+    			},
+
+    			user: {
+    				type: Object,
+    			},
+
+    			userImageSize: {
+    				type: Number,
+    				value: 100,
+    			},
+
+    			mediumImageBaseUrl: {
+    				type: String,
+    				value: 'https://cdn-images-1.medium.com/fit/c',
+    			},
+
+    			userImage: {
+    				type: String,
+    				computed: '_computeUserImage(user.imageId, userImageSize, mediumImageBaseUrl)',
+    			},
+    		};
+    	}
+
+    	_roundUp(num) {
+    		return Math.ceil(num);
+    	}
+
+    	_getDate(num) {
+    		return moment(num).fromNow();
+    	}
+
+    	_classForType(type) {
+    		if (type === 13) {
+    			return 'sub-title';
+    		}
+    	}
+
+    	_eql(a, b) {
+    		return a === b;
+    	}
+
+    	_notEql(...args) {
+    		const val = args.shift();
+    		return !args.some(a => a === val);
+    	}
+
+    	_computeUserImage(imageId, size, base) {
+    		return `${base}/${size}/${size}/${imageId}`;
+    	}
+
+    	_handleResponse(e) {
+    		if (!e.detail.response) {
+    			return;
+    		}
+
+    		this.response = e.detail.response;
+
+    		const payload = this.response.payload;
+
+    		if (!payload) {
+    			return;
+    		}
+
+    		if (payload.references && payload.references.Post) {
+    			this.posts = Object.keys(payload.references.Post).map(k => payload.references.Post[k]);
+    		}
+
+    		if (payload.user) {
+    			this.user = payload.user;
+    		}
+    	}
+    }
+
+    window.customElements.define(MediumStories.is, MediumStories);
+  </script>
+</dom-module>
