@@ -3,28 +3,6 @@
 <link rel="import" href="../import-momentjs/import-momentjs.html">
 <link rel="import" href="../iron-ajax/iron-ajax.html">
 
-<!--
-`medium-stories` display a feed of your latest medium stories
-
-    Example of a native element demo
-
-        <medium-stories url="GET_YOUR_URL">
-
-### Styling
-
-The following custom properties and mixins are available for styling:
-
-Custom property | Description | Default
-----------------|-------------|----------
-`--medium-stories-card` | Mixin applied to the story card | `{}`
-`--medium-stories-title` | Mixin applied to titles | `{}`
-`--medium-stories-sub-title` | Mixin applied to sub titles | `{}`
-`--medium-stories-profile` | Mixin applied to the profile container | `{}`
-
-@element medium-stories
-@demo demo/index.html
--->
-
 <dom-module id="medium-stories">
   <template>
     <style>
@@ -191,6 +169,16 @@ Custom property | Description | Default
     /**
      * `medium-story-card`
      * A card displaying and linking to a story published on medium
+     *   ### Styling
+     *
+     *  The following custom properties and mixins are available for styling:
+     *
+     *  Custom property | Description | Default
+     *  ----------------|-------------|----------
+     *  `--medium-stories-card` | Mixin applied to the story card | `{}`
+     *  `--medium-stories-title` | Mixin applied to titles | `{}`
+     *  `--medium-stories-sub-title` | Mixin applied to sub titles | `{}`
+     *  `--medium-stories-profile` | Mixin applied to the profile container | `{}`
      *
      * @customElement
      * @polymer
