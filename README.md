@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/JaySunSyn/medium-stories.svg?branch=master)](https://travis-ci.org/JaySunSyn/medium-stories)
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/jaysunsyn/medium-stories)
+[![Maintainability](https://api.codeclimate.com/v1/badges/33892f06bcbe36a4218f/maintainability)](https://codeclimate.com/github/JaySunSyn/medium-stories/maintainability)
+<a href="https://codeclimate.com/github/JaySunSyn/medium-stories/test_coverage"><img src="https://api.codeclimate.com/v1/badges/33892f06bcbe36a4218f/test_coverage" /></a>
 
 # \<medium-stories\>
 
