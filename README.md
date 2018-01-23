@@ -5,6 +5,8 @@
 
 A Polymer 2 element which displays the latest stories of your medium account.
 
+![screen shot 2018-01-23 at 12 08 59](https://user-images.githubusercontent.com/5872432/35272843-e20c5140-0036-11e8-9e4c-ac6a32401803.png)
+
 ## Demo
 <!--
 ```
