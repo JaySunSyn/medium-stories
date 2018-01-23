@@ -1,6 +1,6 @@
 {
   "name": "medium-stories",
-  "description": "A card displaying and linking to a story published on medium",
+  "description": "Display a feed of your latest medium.com stories",
   "main": "medium-stories.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0",

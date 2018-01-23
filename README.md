@@ -3,7 +3,7 @@
 
 # \<medium-stories\>
 
-Displays the latest stories of your medium account.
+A Polymer 2 element which displays the latest stories of your medium account.
 
 ## Demo
 <!--

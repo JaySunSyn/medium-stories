@@ -1,9 +1,29 @@
 <link rel="import" href="../polymer/polymer-element.html">
 <link rel="import" href="../polymer/lib/elements/dom-if.html">
-
 <link rel="import" href="../import-momentjs/import-momentjs.html">
-
 <link rel="import" href="../iron-ajax/iron-ajax.html">
+
+<!--
+`medium-stories` display a feed of your latest medium stories
+
+    Example of a native element demo
+
+        <medium-stories url="GET_YOUR_URL">
+
+### Styling
+
+The following custom properties and mixins are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--medium-stories-card` | Mixin applied to the story card | `{}`
+`--medium-stories-title` | Mixin applied to titles | `{}`
+`--medium-stories-sub-title` | Mixin applied to sub titles | `{}`
+`--medium-stories-profile` | Mixin applied to the profile container | `{}`
+
+@element medium-stories
+@demo demo/index.html
+-->
 
 <dom-module id="medium-stories">
   <template>
@@ -50,6 +70,7 @@
         padding-bottom: 15px;
         padding-top: 10px;
         margin-top: 20px;
+        @apply --medium-stories-card;
       }
 
       .title,
@@ -63,11 +84,13 @@
         margin-left: -1.88px;
         line-height: 1.04;
         letter-spacing: -.015em;
+        @apply --medium-stories-title;
       }
 
       .sub-title {
         color: rgba(0, 0, 0, .54);
         font-size: 20px;
+        @apply --medium-stories-sub-title;
       }
 
       @media (max-width: 767px) {
@@ -91,6 +114,7 @@
         -webkit-align-items: center;
         -ms-flex-align: center;
         align-items: center;
+        @apply --medium-stories-profile;
       }
 
       .profile-image {
@@ -192,6 +216,18 @@
     			posts: {
     				type: Array,
     			},
+    			/**
+           * Controls which posts to display.
+           * Overwrite with a custom filter.
+           */
+    			postsFilterFn: {
+    				type: Function,
+    				value() {
+    					return (posts) => {
+    						return posts;
+    					};
+    				},
+    			},
 
     			user: {
     				type: Object,
@@ -255,7 +291,7 @@
     		}
 
     		if (payload.references && payload.references.Post) {
-    			this.posts = Object.keys(payload.references.Post).map(k => payload.references.Post[k]);
+    			this.posts = this.postsFilterFn(Object.keys(payload.references.Post).map(k => payload.references.Post[k]));
     		}
 
     		if (payload.user) {
