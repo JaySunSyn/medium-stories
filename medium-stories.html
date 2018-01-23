@@ -121,7 +121,7 @@
       }
 
       .profile-name {
-        color: #03a87c;
+        color: #03a87c !important;
       }
 
       .profile-info {
@@ -176,6 +176,11 @@
     	static get is() {return 'medium-stories';}
     	static get properties() {
     		return {
+    			/**
+           * The URL to retrieve the latest medium stories of your profile.
+           * You need to create a proxy for that. (easy as pie)
+           * Go here to read how https://github.com/JaySunSyn/medium-firebase-proxy
+           */
     			url: {
     				type: String,
     			},
