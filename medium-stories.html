@@ -243,7 +243,7 @@
     	}
 
     	_getDate(num) {
-    		return moment(num).fromNow();
+    		return moment ? moment(num).fromNow() : new Date(num).toLocaleDateString();
     	}
 
     	_classForType(type) {
