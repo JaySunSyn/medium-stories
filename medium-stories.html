@@ -136,7 +136,7 @@
         <div class="profile">
           <img class="profile-image" src="[[userImage]]" alt="">
           <div class="profile-desc">
-            <a class="profile-name" rel=”noopener” href="https://medium.com/@[[user.username]]" target="_blank">[[user.name]]</a>
+            <a class="profile-name" href="https://medium.com/@[[user.username]]" target="_blank" rel="noopener">[[user.name]]</a>
             <div class="profile-info">
               <span>[[_getDate(post.firstPublishedAt)]]</span>
               <span>&#183;</span>
@@ -144,7 +144,7 @@
             </div>
           </div>
         </div>
-        <a class="content" rel=”noopener” href="https://medium.com/@[[user.username]]/[[post.uniqueSlug]]" target="_blank">
+        <a class="content" href="https://medium.com/@[[user.username]]/[[post.uniqueSlug]]" target="_blank" rel="noopener">
           <template is="dom-repeat" items="[[post.previewContent.bodyModel.paragraphs]]" as="preview">
             <template is="dom-if" if="[[_eql(preview.type,3)]]">
               <h1 class="title">[[preview.text]]</h1>
