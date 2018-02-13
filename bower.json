@@ -5,8 +5,7 @@
   "main": "medium-stories.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0",
-    "iron-ajax": "^2.0.8",
-    "import-momentjs": "^1.0.1"
+    "iron-ajax": "^2.0.8"
   },
   "devDependencies": {
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
